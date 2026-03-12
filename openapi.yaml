@@ -1,0 +1,54 @@
+openapi: 3.0.3
+info:
+  title: Yrkanderoll API
+  version: 1.0.0
+  description: API för att hantera yrkanderoller.
+
+paths:
+  /yrkanderoll/{yrkanderollId}:
+    get:
+      tags: [ YrkanderollController ]
+      operationId: getYrkanderoll
+      summary: Hämtar en yrkanderoll
+      description: Hämtar en yrkanderoll baserat på dess unika ID
+      parameters:
+        - name: yrkanderollId
+          in: path
+          required: true
+          description: Yrkanderollens unika ID
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Yrkanderoll hittad
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetYrkanderollResponse'
+        '404':
+          description: Yrkanderoll hittades inte
+
+components:
+  schemas:
+    Yrkanderoll:
+      type: object
+      description: Yrkanderoll
+      properties:
+        id:
+          type: string
+          description: Yrkanderollens unika ID
+          format: uuid
+        version:
+          type: string
+          description: Yrkanderollens version
+        namn:
+          type: string
+          description: Yrkanderollens namn
+    GetYrkanderollResponse:
+      type: object
+      properties:
+        yrkanderoll:
+          $ref: '#/components/schemas/Yrkanderoll'
+      required:
+        - yrkanderoll
